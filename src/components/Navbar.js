@@ -1,25 +1,22 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
-export default function Navbar() {
+const Navbar1 = () => {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a className="navbar-brand" href="/">Fraud email detection</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                    <a className="nav-link" href="/">Home</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/">About</a>
-                </li>
-            </ul>
+    <div className='flex-between'>
+        <div className='nav-list nav-links'>
+            <h5 className='heading'>Fraud Email Detection</h5>  
+            <Link className="td-none" to={'/home'}><div>Home</div></Link>
+            <Link className="td-none" to={'/'}><div>About</div></Link>
+            <Link className="td-none" to={'/'}><div>Portfolio</div></Link>
         </div>
-        </nav>
+        <div className='nav-list'>
+            <Link className="td-none" to={'/login'}><div className='login'>Sign In</div></Link>
+            <Link className="td-none" to={'/signup'}><div className='signup'>Sign Up</div></Link>
+        </div>
     </div>
   )
 }
+
+export default Navbar1
+
