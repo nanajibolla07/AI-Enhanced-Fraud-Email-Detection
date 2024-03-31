@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
+import {AuthContext} from '../contexts/authContext';
 
-const Navbar1 = () => {
+
+const Navbar = () => {
+  const { isLoggedIn,validateLogin,logout } = useContext(AuthContext);
+  validateLogin();
+
   return (
     <div className='flex-between'>
         <div className='nav-list nav-links'>
@@ -10,13 +15,18 @@ const Navbar1 = () => {
             <Link className="td-none" to={'/'}><div>About</div></Link>
             <Link className="td-none" to={'/'}><div>Portfolio</div></Link>
         </div>
+        {!isLoggedIn &&
         <div className='nav-list'>
             <Link className="td-none" to={'/login'}><div className='login'>Sign In</div></Link>
             <Link className="td-none" to={'/signup'}><div className='signup'>Sign Up</div></Link>
-        </div>
+        </div>}
+        {isLoggedIn &&
+        <div className='nav-list'>
+          <div className='logout' onClick={logout}>Log Out</div>  
+        </div>}
     </div>
   )
 }
 
-export default Navbar1
+export default Navbar
 

@@ -1,52 +1,94 @@
-import { useState } from "react";
+import { useState} from "react";
 
 export default function TextForm() {
-    const predict = async ()=>{ 
-        try {
-          // Make a POST request to the Flask backend API
-          const response = await fetch('http://localhost:5000/predict', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(message),
-          });
-          const data = await response.json();
-          setResult(data.predictions)
-          console.log(result);
-          setDisplay(true);
-          } catch (error) {
-            console.error('Error making prediction:', error);
-          }
+
+  const predict = async () => {
+    try {
+      // Make a POST request to the Flask backend API
+      const response = await fetch('http://localhost:5001/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message),
+      });
+      const data = await response.json();
+      setResult(data.predictions)
+      // console.log(result);
+      setToDisplayMeessage(true);
+    } catch (error) {
+      console.error('Error making prediction:', error);
     }
-    const [display,setDisplay] = useState(false); 
-    const result_style = ['alert alert-success my-3','alert alert-danger my-3'];
-    const [result,setResult] = useState(null);
-    // const [subject,setSubject] = useState("");
-    const [message,setmessage] = useState("");
-    // const subjectChange = (event)=> {
-    //     setSubject(event.target.value);
-    // }
-    const messageChange = (event)=> {
-      setDisplay(false);
-        setmessage(event.target.value);
+  }
+  const [toDisplayMeessage, setToDisplayMeessage] = useState(false);
+  const resultStyle = ['alert alert-success my-3', 'alert alert-danger my-3'];
+  const [result, setResult] = useState(null);
+  const [message, setmessage] = useState("");
+  const [isContentAddedToDb, setIsContentAddedToDb] = useState(false);
+
+  const onMessageChange = (event) => {
+    setToDisplayMeessage(false);
+    setmessage(event.target.value);
+  }
+  
+  const showContentAddedToDbMsg = ()=>{
+    setIsContentAddedToDb(true);
+    setTimeout(() => {
+      setIsContentAddedToDb(false);
+      setToDisplayMeessage(false);
+    }, 3000);
+  }
+  const saveMessage = async () => {
+    if (message === ""){
+      console.log("No auth token");
+      return;
+    } 
+      
+    let authtoken = localStorage.getItem("authtoken");
+    if (authtoken === null) {
+      console.log("User has not logged in");
+      return;
     }
-    return (
-        <>
-        <div className="container"> 
-            <div className="mb-3"> 
-            {/* <h4>Enter Subject</h4>
-            <textarea className="form-control" onChange={subjectChange} value={subject} id="subject" rows="2"></textarea> */}
-            <h4>Enter Message</h4>
-            <textarea className="form-control my-2" onChange={messageChange} value={message} id="message" rows="8"></textarea>
-            </div>
-            <button className="btn btn-primary mx-1 my-1"  onClick={predict}>Run Analysis</button>
-            {display && <div>
-                <div className={result_style[result]} role="alert">
-                  {result===0?"Genuine":"Fraud"}
-                </div>
-            </div>}
+    try {
+      const response = await fetch("http://localhost:5000/api/message/addmessage",
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': authtoken
+          },
+          body: JSON.stringify({ messageContent: message, result })
+        });
+        const json  = await response.json();
+        if(json.success === true){
+          showContentAddedToDbMsg();
+        }
+        else{
+          console.log(json);
+        }
+    }
+    catch {
+      console.log("Error in saving the addmessage");
+    }
+  }
+
+
+  return (
+    <div className="textform-container">
+      <h3 className="col-white">Enter Your Email</h3>
+      <textarea className="email-text" onChange={onMessageChange} value={message} id="message" rows="8"></textarea>
+      <button className="btn-size mr-1" onClick={predict}>Run Analysis</button>
+      {toDisplayMeessage && <button className="btn-size mr-1" onClick={saveMessage}>Save Message</button>}
+      {toDisplayMeessage && <div>
+        <div className={resultStyle[result]} role="alert">
+          {result === 0 ? "Genuine" : "Fraud"}
         </div>
-        </>
-    )
+      </div>}
+      {isContentAddedToDb && <div>
+        <div className="alert alert-dark" role="alert">
+          The Message sucessfully added to Data Base
+        </div>
+      </div>}
+    </div>
+  )
 }

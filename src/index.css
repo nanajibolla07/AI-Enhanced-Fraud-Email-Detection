@@ -5,11 +5,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(#151314,#54211e);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.ds-none{
+  display: none;
 }
 
 
@@ -17,7 +24,7 @@ code {
   transition: border .20s ease-in-out, box-shadow .20s ease-in-out;
 }
 .userForm input{
-  width: 250px;
+  width: 100%;
   padding: 8px 10px;
 }
 .userForm input:focus{
@@ -27,8 +34,7 @@ code {
   border-radius: 2px;
 }
 
-.page-bg{
-  background-image: linear-gradient(#151314,#54211e);
+.height-full-page{
   min-height: calc(100vh - 56px);
 }
 .place-center{
@@ -39,7 +45,7 @@ code {
   background-color: white;
   box-shadow: 0 0 5px 2px rgb(145, 146, 142);
   border-radius: 15px;
-  /* margin-top: 100px; */
+  width: 350px;
   padding: 30px 30px;
 }
 .input-container{
@@ -53,7 +59,7 @@ code {
 }
 .userForm input{
   display: block;
-  /* border-radius: 5px; */
+  border: 1px solid gray;
 }
 .userForm div{
   margin-top: 15px;
@@ -86,10 +92,13 @@ code {
   margin: 10px auto;
   width: 90%;
 }
+.error{
+  color: red;
+  font-size: 14px;
+}
 
 
-
-
+/* NavBar */
 .flex-between{
   display: flex;
   justify-content: space-between;
@@ -123,35 +132,60 @@ code {
   border-radius: 20px;
 }
 .heading{
-  /* position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 70px; */
   margin: 0;
 }
+
+
+
 .home-container{
   display: grid;
-  width: 100%;
-  padding-top: 20px;
+  place-content: center;
   grid-template-columns: 50% 50%;
   padding: 20px;
 }
 .home-container img{
   width: 100%;
 }
-.home-heading{
-  margin-top: 100px;
-  font-size: 50px;
+.banner-heading{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.home-heading-text{
+  font-size: clamp(16px,4vw,50px);
   color: white;
 }
 .btn-runanalysis{
+  border: gray;
+}
+.btn-size:hover{
+  background-image: linear-gradient(#151314,#54211e);
+  box-shadow: 0 0 5px 3px white;
+  color: white;
+}
+
+
+/* Home */
+.textform-container{
+  padding: 10px 5%;
+}
+.email-text{
+  width: 100%;
+  display: block;
+  margin: 1rem auto;
+
+}
+.col-white{
+  color: white;
+}
+.btn-size{
   height: 3rem;
   padding: 0 30px;
   border-radius: 3rem;
   margin-top: 30px;
   font-weight: 700;
-  border: gray;
+  border: none;
 }
-.btn-runanalysis:hover{
-  background-color: gray;
+.mr-1{
+  margin-right: 1rem;
 }

@@ -9,15 +9,17 @@ import Home from './components/Home';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Navbar></Navbar>
-        <Routes>
-          <Route path='/' element={<TextForm/>}></Route>
-          <Route path='/home' element={<Home/>}></Route>
-          <Route path='/login' element={<Login/>}></Route>
-          <Route path='/signup' element={<SignUp/>}></Route>
-        </Routes>
-      </BrowserRouter>
+      {/* <AuthContext> */}
+        <BrowserRouter>
+          <Navbar></Navbar>
+          <Routes>
+            <Route path='/' element={<TextForm/>}></Route>
+            <Route path='/home' element={<Home/>}></Route>
+            <Route path='/login' element={<Login/>}></Route>
+            <Route path='/signup' element={<SignUp/>}></Route>
+          </Routes>
+        </BrowserRouter>
+      {/* </AuthContext> */}
     </div>
   );
 }
