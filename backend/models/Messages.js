@@ -6,12 +6,12 @@ const messageSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    message: {
+    content: {
         type: String,
         required: true
     },
     result: {
-        type: String,
+        type: Number,
         required: true
     },
     date: {

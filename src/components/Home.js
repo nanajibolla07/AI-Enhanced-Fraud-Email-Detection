@@ -1,17 +1,49 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from "react-router-dom";
+import {AuthContext} from '../contexts/authContext';
+import MessageList from './MessageList';
 
 const Home = () => {
+  const [toDisplayMessages, setToDisplayMessages] = useState(false);
+  const [messages, setMessages] = useState({});
+  
+  const { isLoggedIn } = useContext(AuthContext);
+  const viewSavedMessages = async() => {
+    const authtoken = localStorage.getItem("authtoken");
+    if(!authtoken) {
+      return;
+    }
+    const response = await fetch("http://localhost:5000/api/message/fetchallmessages",
+    {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': authtoken
+        },
+    });
+    const result = await response.json();
+    if(result.success){
+      setMessages(result.messages);
+      setToDisplayMessages(true);
+    }
+  }
+
   return (
-    <div className='home-container height-full-page'>
-        <div className='banner-heading'>
-            <div className='home-heading-text'>Click here to check wheather you Email is Geninune or Fraud</div>
-            <Link to={'/'}><button className='btn-runanalysis btn-size'>Run Analysis</button></Link>
-        </div>
-        <div>
-            <img src={'aiMessage.png'}></img>
-        </div>
-    </div>
+    <>
+      <div className='home-container height-full-page'>
+          <div className='banner-heading'>
+              <div className='home-heading-text'>Click here to check wheather you Email is Geninune or Fraud</div>
+              <div>
+                <Link to={'/'}><button className='btn-size mr-1'>Run Analysis</button></Link>
+                {isLoggedIn && <button className="btn-size" onClick={viewSavedMessages}>View Saved Messages</button>}
+              </div>
+          </div>
+          <div>
+              <img src={'aiMessage.png'} alt='Banner'></img>
+          </div>
+      </div>
+      { toDisplayMessages && isLoggedIn && <MessageList messages={messages}/> }
+    </>
   )
 }
 

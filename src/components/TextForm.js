@@ -1,8 +1,12 @@
-import { useState} from "react";
+import {useState, useContext} from "react";
+import {AuthContext} from '../contexts/authContext';
+
 
 export default function TextForm() {
+  const { isLoggedIn } = useContext(AuthContext);
 
   const predict = async () => {
+    if(message.length === 0) return;
     try {
       // Make a POST request to the Flask backend API
       const response = await fetch('http://localhost:5001/predict', {
@@ -27,7 +31,8 @@ export default function TextForm() {
   const [isContentAddedToDb, setIsContentAddedToDb] = useState(false);
 
   const onMessageChange = (event) => {
-    setToDisplayMeessage(false);
+    if(toDisplayMeessage)
+     setToDisplayMeessage(false);
     setmessage(event.target.value);
   }
   
@@ -57,7 +62,7 @@ export default function TextForm() {
             'Content-Type': 'application/json',
             'auth-token': authtoken
           },
-          body: JSON.stringify({ messageContent: message, result })
+          body: JSON.stringify({ messageContent: message, result: Number(result) })
         });
         const json  = await response.json();
         if(json.success === true){
@@ -78,7 +83,7 @@ export default function TextForm() {
       <h3 className="col-white">Enter Your Email</h3>
       <textarea className="email-text" onChange={onMessageChange} value={message} id="message" rows="8"></textarea>
       <button className="btn-size mr-1" onClick={predict}>Run Analysis</button>
-      {toDisplayMeessage && <button className="btn-size mr-1" onClick={saveMessage}>Save Message</button>}
+      {toDisplayMeessage && isLoggedIn && <button className="btn-size mr-1" onClick={saveMessage}>Save Message</button>}
       {toDisplayMeessage && <div>
         <div className={resultStyle[result]} role="alert">
           {result === 0 ? "Genuine" : "Fraud"}

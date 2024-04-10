@@ -22,12 +22,12 @@ router.post('/addmessage', fetchuser,async (req,res)=>{
     let success = true;
     try{
         const {messageContent, result} = req.body;
-
         const message = new Messages({
-            message: messageContent,result, user:req.user.id
+            content: messageContent,result, user:req.user.id
         });
         const savedMessage = await message.save();
         res.json({success,savedMessage});
+
     }
     catch (error) {
         console.error(error);

@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className='nav-list nav-links'>
             <h5 className='heading'>Fraud Email Detection</h5>  
             <Link className="td-none" to={'/home'}><div>Home</div></Link>
-            <Link className="td-none" to={'/'}><div>About</div></Link>
+            <Link className="td-none" to={'/about'}><div>About</div></Link>
             <Link className="td-none" to={'/'}><div>Portfolio</div></Link>
         </div>
         {!isLoggedIn &&
