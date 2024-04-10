@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import {AuthContext} from '../contexts/authContext';
 
 
 const Navbar = () => {
   const { isLoggedIn,validateLogin,logout } = useContext(AuthContext);
-  validateLogin();
+  useEffect(() => {
+    validateLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='flex-between'>

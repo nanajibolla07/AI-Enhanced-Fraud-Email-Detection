@@ -193,6 +193,8 @@ code {
 /* Messsage Card */
 .message-card{
   display: flex;
+  margin: 0 5%;
+  border-radius: 10px;
   align-items: center;
   justify-content: space-around;
   /* background-color: white; */
@@ -202,8 +204,22 @@ code {
   margin-bottom: 1rem;
 }
 .message-card .message{
+  padding: 0 1rem;
   width: 80%;
 }
 .message-card .result{
   width: 150px;
+}
+
+/* About */
+.about{
+  color: white;
+  padding: 10px 2%;
+}
+.about footer,.about header{
+  display: flex;
+  justify-content: center;
+}
+.mt-2r{
+  margin-top: 2rem;
 }

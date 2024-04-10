@@ -27,6 +27,10 @@ const Home = () => {
       setToDisplayMessages(true);
     }
   }
+  const hideMessages = () =>{
+    setToDisplayMessages(false);
+    setMessages({});
+  }
 
   return (
     <>
@@ -35,7 +39,8 @@ const Home = () => {
               <div className='home-heading-text'>Click here to check wheather you Email is Geninune or Fraud</div>
               <div>
                 <Link to={'/'}><button className='btn-size mr-1'>Run Analysis</button></Link>
-                {isLoggedIn && <button className="btn-size" onClick={viewSavedMessages}>View Saved Messages</button>}
+                {isLoggedIn && !toDisplayMessages && <button className="btn-size" onClick={viewSavedMessages}>View Saved Messages</button>}
+                {toDisplayMessages && <button className="btn-size" onClick={hideMessages}>Hide Messages</button>}
               </div>
           </div>
           <div>
