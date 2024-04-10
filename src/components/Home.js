@@ -36,9 +36,9 @@ const Home = () => {
     <>
       <div className='home-container height-full-page'>
           <div className='banner-heading'>
-              <div className='home-heading-text'>Click here to check wheather you Email is Geninune or Fraud</div>
+              <div className='home-heading-text'>Click here to check whether you Email is Genuine or Fraud</div>
               <div>
-                <Link to={'/'}><button className='btn-size mr-1'>Run Analysis</button></Link>
+                <Link to={'/runanalysis'}><button className='btn-size mr-1'>Run Analysis</button></Link>
                 {isLoggedIn && !toDisplayMessages && <button className="btn-size" onClick={viewSavedMessages}>View Saved Messages</button>}
                 {toDisplayMessages && <button className="btn-size" onClick={hideMessages}>Hide Messages</button>}
               </div>
